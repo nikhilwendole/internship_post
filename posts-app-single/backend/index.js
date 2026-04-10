@@ -17,12 +17,21 @@ const allowedOrigins = [
   process.env.FRONTEND_URL,
 ].filter(Boolean);
 
+// app.use(
+//   cors({
+//     origin: (origin, cb) => {
+//       if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
+//       cb(new Error("Not allowed by CORS"));
+//     },
+//   })
+// );
 app.use(
   cors({
-    origin: (origin, cb) => {
-      if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
-      cb(new Error("Not allowed by CORS"));
-    },
+    origin: [
+      "http://localhost:3000",
+      "https://internship-post.vercel.app"
+    ],
+    credentials: true
   })
 );
 app.use(express.json());
