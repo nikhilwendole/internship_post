@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 
-const WS_URL =
-  import.meta.env.VITE_WS_URL ||
-  (window.location.protocol === "https:" ? "wss://" : "ws://") +
-    (import.meta.env.VITE_API_HOST || "localhost:5000") +
-    "/ws";
+const WS_URL = (() => {
+  if (import.meta.env.VITE_WS_URL) return import.meta.env.VITE_WS_URL;
+  
+  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  const wsProtocol = apiUrl.startsWith("https") ? "wss://" : "ws://";
+  const host = apiUrl.replace(/^https?:\/\//, "");
+  return `${wsProtocol}${host}/ws`;
+})();
 
 export function useWebSocketSearch() {
   const ws = useRef(null);
