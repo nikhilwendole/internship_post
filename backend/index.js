@@ -15,6 +15,7 @@ const server = http.createServer(app);
 const allowedOrigins = [
   "http://localhost:3000",
   process.env.FRONTEND_URL,
+  "https://internship-post.vercel.app",
 ].filter(Boolean);
 
 app.use(
